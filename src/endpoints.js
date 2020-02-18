@@ -1,3 +1,5 @@
 exports.buildEndpoints = factory => ({
-    organizations: factory('/organizations'),
+    organizations: {
+        index: factory.createIndex('/organizations'),
+    },
 });
