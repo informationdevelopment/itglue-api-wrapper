@@ -5,12 +5,12 @@ module.exports.createFactory = (apiKey, baseUrl) => {
     const fetchJson = createAuthFetch(apiKey);
 
     return {
-        createIndex: endpoint => (params = {}, pageSize = 100) => ({
+        createIndex: endpoint => ({ options, pageSize = 100 } = {}) => ({
             async * [Symbol.asyncIterator]() {
                 const url = new URL(endpoint, baseUrl);
-                const urlSearchParams = getURLSearchParams(params);
-                urlSearchParams.set('page[size]', pageSize);
-                url.search = `?${urlSearchParams.toString()}`;
+                const params = getURLSearchParams(options);
+                params.set('page[size]', pageSize);
+                url.search = `?${params.toString()}`;
                 let link = url.href;
                 do {
                     const json = await fetchJson(link);
@@ -33,9 +33,9 @@ module.exports.createFactory = (apiKey, baseUrl) => {
             },
         }),
 
-        createShow: endpoint => async (id, params = {}) => {
-            const urlSearchParams = getURLSearchParams(params);
-            const json = await fetchJson(`${endpoint}/${id}`, baseUrl, urlSearchParams);
+        createShow: endpoint => async ({ id, options }) => {
+            const params = getURLSearchParams(options);
+            const json = await fetchJson(`${endpoint}/${id}`, baseUrl, params);
             return json.data;
         },
     };

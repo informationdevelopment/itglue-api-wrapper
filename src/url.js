@@ -1,5 +1,5 @@
 // Flatten an object by wrapping nested keys with a scope.
-module.exports.getURLSearchParams = function(params) {
+module.exports.getURLSearchParams = function(params = {}) {
     function flattenObjectEntries(entries, scope = []) {
             return entries.reduce((acc, [key, value]) => {
                 if (typeof value === 'object' && value !== null) {
