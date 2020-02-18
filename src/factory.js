@@ -32,5 +32,11 @@ module.exports.createFactory = (apiKey, baseUrl) => {
                 return result;
             },
         }),
+
+        createShow: endpoint => async (id, params = {}) => {
+            const urlSearchParams = getURLSearchParams(params);
+            const json = await fetchJson(`${endpoint}/${id}`, baseUrl, urlSearchParams);
+            return json.data;
+        },
     };
 };
