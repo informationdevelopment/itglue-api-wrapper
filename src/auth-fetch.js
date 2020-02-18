@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-exports.createAuthFetch = apiKey => async (url, method = 'GET', body) => {
+module.exports.createAuthFetch = apiKey => async (url, method = 'GET', body) => {
     options = {
         method,
         body,

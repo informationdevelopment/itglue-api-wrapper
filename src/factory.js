@@ -1,7 +1,7 @@
 const { createAuthFetch } = require('./auth-fetch');
 const { getURLSearchParams } = require('./url');
 
-exports.createFactory = (apiKey, baseUrl) => {
+module.exports.createFactory = (apiKey, baseUrl) => {
     const fetch = createAuthFetch(apiKey);
 
     return {
