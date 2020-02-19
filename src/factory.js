@@ -5,7 +5,7 @@ module.exports.createFactory = (apiKey, baseUrl) => {
     const fetchJson = createAuthFetch(apiKey);
 
     return {
-        createIndex: endpoint => ({ options, pageSize = 100 } = {}) => ({
+        createIndex: endpoint => (options, pageSize = 100) => ({
             async * [Symbol.asyncIterator]() {
                 const url = new URL(endpoint, baseUrl);
                 const params = getURLSearchParams(options);
@@ -33,7 +33,7 @@ module.exports.createFactory = (apiKey, baseUrl) => {
             },
         }),
 
-        createShow: endpoint => async ({ id, options }) => {
+        createShow: endpoint => async (id, options) => {
             const params = getURLSearchParams(options);
             const json = await fetchJson(`${endpoint}/${id}`, baseUrl, params);
             return json.data;
