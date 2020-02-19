@@ -13,4 +13,9 @@ module.exports.buildEndpoints = factory => ({
         index: factory.createIndex('/organizations'),
         show: factory.createShow('/organizations'),
     },
+
+    locations: {
+        index: factory.createIndex('/locations'),
+        show: factory.createShow('/locations'),
+    },
 });
