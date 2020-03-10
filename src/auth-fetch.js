@@ -15,7 +15,7 @@ module.exports.createAuthFetch = apiKey => async (
     }
     options = {
         method,
-        ...(body: { body: JSON.stringify(body) } : {}),
+        ...(body ? { body: JSON.stringify(body) } : {}),
         headers: {
             'x-api-key': apiKey,
             'Content-Type': 'application/vnd.api+json',
