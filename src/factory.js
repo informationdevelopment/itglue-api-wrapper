@@ -42,5 +42,15 @@ module.exports.createFactory = (apiKey, baseUrl) => {
             });
             return json.data;
         },
+
+        createUpdate: endpoint => async (id, data) => {
+            const json = await fetchJson({
+                resource: `${endpoint}/${id}`,
+                baseUrl,
+                method: 'PATCH',
+                body: { data },
+            });
+            return json.data;
+        },
     };
 };
