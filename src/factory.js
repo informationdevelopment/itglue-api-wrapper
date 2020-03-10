@@ -13,7 +13,7 @@ module.exports.createFactory = (apiKey, baseUrl) => {
                 url.search = `?${params.toString()}`;
                 let link = url.href;
                 do {
-                    const json = await fetchJson(link);
+                    const json = await fetchJson({ resource: link });
                     for (let datum of json.data) {
                         yield { ...datum, meta: json.meta };
                     }
@@ -35,7 +35,11 @@ module.exports.createFactory = (apiKey, baseUrl) => {
 
         createShow: endpoint => async (id, options) => {
             const params = getURLSearchParams(options);
-            const json = await fetchJson(`${endpoint}/${id}`, baseUrl, params);
+            const json = await fetchJson({
+                resource: `${endpoint}/${id}`,
+                baseUrl,
+                urlSearchParams: params,
+            });
             return json.data;
         },
     };

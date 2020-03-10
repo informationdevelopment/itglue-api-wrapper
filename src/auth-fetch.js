@@ -1,13 +1,21 @@
 const fetch = require('node-fetch');
 
-module.exports.createAuthFetch = apiKey => async (resource, baseUrl, urlSearchParams, method = 'GET', body) => {
+module.exports.createAuthFetch = apiKey => async (
+    {
+        resource,
+        baseUrl,
+        urlSearchParams,
+        method = 'GET',
+        body,
+    } = {}
+) => {
     const url = new URL(resource, baseUrl);
     if (urlSearchParams) {
         url.search = `?${urlSearchParams.toString()}`;
     }
     options = {
         method,
-        body,
+        ...(body: { body: JSON.stringify(body) } : {}),
         headers: {
             'x-api-key': apiKey,
             'Content-Type': 'application/vnd.api+json',
