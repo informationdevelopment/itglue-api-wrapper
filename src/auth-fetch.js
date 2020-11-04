@@ -1,5 +1,7 @@
 const fetch = require('node-fetch');
 
+const defaultSelector = async res => await res.json();
+
 module.exports.createAuthFetch = apiKey => async (
     {
         resource,
@@ -7,6 +9,7 @@ module.exports.createAuthFetch = apiKey => async (
         urlSearchParams,
         method = 'GET',
         body,
+        selector = defaultSelector,
     } = {}
 ) => {
     const url = new URL(resource, baseUrl);
@@ -25,5 +28,5 @@ module.exports.createAuthFetch = apiKey => async (
     if (!res.ok) {
         throw new Error(`IT Glue API failure: HTTP ${res.status} ${res.statusText}`);
     }
-    return await res.json();
+    return selector(res);
 };

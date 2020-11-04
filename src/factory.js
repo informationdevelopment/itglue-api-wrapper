@@ -43,6 +43,16 @@ module.exports.createFactory = (apiKey, baseUrl) => {
             return json.data;
         },
 
+        createCreate: endpoint => async data => {
+            const json = await fetchJson({
+                resource: endpoint,
+                baseUrl,
+                method: 'POST',
+                body: { data },
+            });
+            return json.data;
+        },
+
         createUpdate: endpoint => async (id, data) => {
             const json = await fetchJson({
                 resource: `${endpoint}/${id}`,
@@ -51,6 +61,25 @@ module.exports.createFactory = (apiKey, baseUrl) => {
                 body: { data },
             });
             return json.data;
+        },
+
+        createBulkUpdate: endpoint => async data => {
+            const json = await fetchJson({
+                resource: endpoint,
+                baseUrl,
+                method: 'PATCH',
+                body: { data },
+            });
+            return json.data;
+        },
+
+        createDestroy: endpoint => async id => {
+            await fetchJson({
+                resource: `${endpoint}/${id}`,
+                baseUrl,
+                method: 'DELETE',
+                selector: res => res.status,
+            });
         },
     };
 };

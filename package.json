@@ -1,6 +1,6 @@
 {
   "name": "@informationdevelopment/itglue-api-wrapper",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A thin Node client for the IT Glue API.",
   "main": "src/index.js",
   "repository": {
