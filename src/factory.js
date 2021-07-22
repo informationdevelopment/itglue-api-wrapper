@@ -40,7 +40,7 @@ module.exports.createFactory = (apiKey, baseUrl) => {
                 baseUrl,
                 urlSearchParams: params,
             });
-            return json.data;
+            return json;
         },
 
         createCreate: endpoint => async data => {
@@ -50,7 +50,7 @@ module.exports.createFactory = (apiKey, baseUrl) => {
                 method: 'POST',
                 body: { data },
             });
-            return json.data;
+            return json;
         },
 
         createUpdate: endpoint => async (id, data) => {
@@ -60,7 +60,7 @@ module.exports.createFactory = (apiKey, baseUrl) => {
                 method: 'PATCH',
                 body: { data },
             });
-            return json.data;
+            return json;
         },
 
         createBulkUpdate: endpoint => async data => {
@@ -70,7 +70,7 @@ module.exports.createFactory = (apiKey, baseUrl) => {
                 method: 'PATCH',
                 body: { data },
             });
-            return json.data;
+            return json;
         },
 
         createDestroy: endpoint => async id => {
