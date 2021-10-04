@@ -1,19 +1,22 @@
 {
-  "name": "@informationdevelopment/itglue-api-wrapper",
-  "version": "0.5.0",
-  "description": "A thin Node client for the IT Glue API.",
-  "main": "src/index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/informationdevelopment/itglue-api-wrapper.git"
-  },
-  "author": "Information Development, Inc.",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/informationdevelopment/itglue-api-wrapper/issues"
-  },
-  "homepage": "https://github.com/informationdevelopment/itglue-api-wrapper#readme",
-  "dependencies": {
-    "node-fetch": "^2.6.0"
-  }
+    "name": "@informationdevelopment/itglue-api-wrapper",
+    "version": "0.5.0",
+    "description": "A thin Node client for the IT Glue API.",
+    "main": "src/index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/informationdevelopment/itglue-api-wrapper.git"
+    },
+    "author": "Information Development, Inc.",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/informationdevelopment/itglue-api-wrapper/issues"
+    },
+    "homepage": "https://github.com/informationdevelopment/itglue-api-wrapper#readme",
+    "dependencies": {
+        "node-fetch": "^2.6.0"
+    },
+    "devDependencies": {
+        "prettier": "2.4.1"
+    }
 }
