@@ -7,6 +7,16 @@ module.exports.buildEndpoints = (factory) => ({
     contacts: {
         index: factory.createIndex("/contacts"),
         show: factory.createShow("/contacts"),
+        relatedItems: {
+            create: factory.createCreate((id, data) => ({
+                resource: `/contacts/${id}/relationships/related_items`,
+                data,
+            })),
+            bulkDestroy: factory.createBulkDestroy((id, data) => ({
+                resource: `/contacts/${id}/relationships/related_items`,
+                data,
+            })),
+        },
     },
 
     flexibleAssets: {

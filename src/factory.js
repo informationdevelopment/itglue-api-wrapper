@@ -1,6 +1,25 @@
 const { createAuthFetch } = require("./auth-fetch");
 const { getURLSearchParams } = require("./url");
 
+function processEndpoint(endpoint, args) {
+    if (typeof endpoint === "function") {
+        return endpoint(...args);
+    }
+
+    let data;
+    let resource = endpoint;
+
+    if (typeof args[args.length - 1] === "object") {
+        data = args.pop();
+    }
+
+    if (args.length === 1) {
+        resource = `${endpoint}/${args[0]}`;
+    }
+
+    return { resource, data };
+}
+
 module.exports.createFactory = (apiKey, baseUrl) => {
     const fetchJson = createAuthFetch(apiKey);
 
@@ -35,53 +54,87 @@ module.exports.createFactory = (apiKey, baseUrl) => {
                 },
             }),
 
-        createShow: (endpoint) => async (id, options) => {
-            const params = getURLSearchParams(options);
-            const json = await fetchJson({
-                resource: `${endpoint}/${id}`,
-                baseUrl,
-                urlSearchParams: params,
-            });
-            return json;
-        },
+        createShow:
+            (endpoint) =>
+            async (...args) => {
+                const { resource, data } = processEndpoint(endpoint, args);
+                const params = getURLSearchParams(data);
 
-        createCreate: (endpoint) => async (data) => {
-            const json = await fetchJson({
-                resource: endpoint,
-                baseUrl,
-                method: "POST",
-                body: { data },
-            });
-            return json;
-        },
+                const json = await fetchJson({
+                    resource,
+                    baseUrl,
+                    urlSearchParams: params,
+                });
+                return json;
+            },
 
-        createUpdate: (endpoint) => async (id, data) => {
-            const json = await fetchJson({
-                resource: `${endpoint}/${id}`,
-                baseUrl,
-                method: "PATCH",
-                body: { data },
-            });
-            return json;
-        },
+        createCreate:
+            (endpoint) =>
+            async (...args) => {
+                const { resource, data } = processEndpoint(endpoint, args);
 
-        createBulkUpdate: (endpoint) => async (data) => {
-            const json = await fetchJson({
-                resource: endpoint,
-                baseUrl,
-                method: "PATCH",
-                body: { data },
-            });
-            return json;
-        },
+                const json = await fetchJson({
+                    resource,
+                    baseUrl,
+                    method: "POST",
+                    body: { data },
+                });
+                return json;
+            },
 
-        createDestroy: (endpoint) => async (id) => {
-            await fetchJson({
-                resource: `${endpoint}/${id}`,
-                baseUrl,
-                method: "DELETE",
-                selector: (res) => res.status,
-            });
-        },
+        createUpdate:
+            (endpoint) =>
+            async (...args) => {
+                const { resource, data } = processEndpoint(endpoint, args);
+
+                const json = await fetchJson({
+                    resource,
+                    baseUrl,
+                    method: "PATCH",
+                    body: { data },
+                });
+                return json;
+            },
+
+        createBulkUpdate:
+            (endpoint) =>
+            async (...args) => {
+                const { resource, data } = processEndpoint(endpoint, args);
+
+                const json = await fetchJson({
+                    resource,
+                    baseUrl,
+                    method: "PATCH",
+                    body: { data },
+                });
+                return json;
+            },
+
+        createDestroy:
+            (endpoint) =>
+            async (...args) => {
+                const { resource } = processEndpoint(endpoint, args);
+
+                await fetchJson({
+                    resource,
+                    baseUrl,
+                    method: "DELETE",
+                    selector: (res) => res.status === 204,
+                });
+            },
+
+        createBulkDestroy:
+            (endpoint) =>
+            async (...args) => {
+                const { resource, data } = processEndpoint(endpoint, args);
+
+                await fetchJson({
+                    resource,
+                    baseUrl,
+                    method: "DELETE",
+                    body: { data },
+                    selector: (res) => res.status === 200,
+                });
+            },
     };
 };
