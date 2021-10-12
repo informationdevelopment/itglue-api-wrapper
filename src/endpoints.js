@@ -2,6 +2,16 @@ module.exports.buildEndpoints = (factory) => ({
     configurations: {
         index: factory.createIndex("/configurations"),
         show: factory.createShow("/configurations"),
+        relatedItems: {
+            create: factory.createCreate((id, data) => ({
+                resource: `/configurations/${id}/relationships/related_items`,
+                data,
+            })),
+            bulkDestroy: factory.createBulkDestroy((id, data) => ({
+                resource: `/configurations/${id}/relationships/related_items`,
+                data,
+            })),
+        },
     },
 
     contacts: {
